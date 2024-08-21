@@ -19,7 +19,7 @@ string user = Environment.GetEnvironmentVariable("DB_USER");
 string password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 #pragma warning restore CS8600 // Se va a convertir un literal nulo o un posible valor nulo en un tipo que no acepta valores NULL
 
-string connectionString = $"Server={server};Database={database};User Id={user};Password={password};";
+string connectionString = $"Server={server};port={port};Database={database};User Id={user};Password={password};";
 
 // Conectar a la base de datos
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
