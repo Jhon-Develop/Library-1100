@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Register";
+}
+
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#registerModal">
+    Register
+</button>
+
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="documentType" class="form-label">Document Type</label>
+                        <select class="form-select" id="documentType" required>
+                            
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="documentNumber" class="form-label">Document Number</label>
+                        <input type="text" class="form-control" id="documentNumber" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phoneNumber" required>
+                    </div>
+                    <input type="hidden" id="role_id" value="user">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Cargar los tipos de documentos dinámicamente
+        fetch('/Auth/GetDocumentTypes')
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('documentType');
+                data.forEach(docType => {
+                    const option = document.createElement('option');
+                    option.value = docType.id;
+                    option.text = docType.name;
+                    select.add(option);
+                });
+            });
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Aquí puedes agregar el código para manejar el registro
+        const formData = new FormData(this);
+
+        fetch('/Auth/Register', {
+            method: 'POST',
+            body: JSON.stringify({
+                name: formData.get('name'),
+                password: formData.get('password'),
+                address: formData.get('address'),
+                documentTypeId: formData.get('documentType'),
+                documentNumber: formData.get('documentNumber'),
+                phoneNumber: formData.get('phoneNumber'),
+                roleId: formData.get('role_id')
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Registro exitoso, cerrar el modal y redirigir o mostrar mensaje
+                alert('Registration successful');
+                $('#registerModal').modal('hide');
+            } else {
+                // Mostrar error
+                alert('Registration failed');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
