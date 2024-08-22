@@ -1,0 +1,69 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!-- Botón para abrir el modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+    Login
+</button>
+
+<!-- Modal de Login -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" onsubmit="event.preventDefault(); login();">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="alert alert-danger d-none" id="loginError" role="alert">
+                        Invalid username or password.
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="redirectToRegister()">Register</button>
+                <button type="submit" class="btn btn-primary" form="loginForm">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('@Url.Action("Login", "Auth")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '@Html.AntiForgeryToken()'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                localStorage.setItem('authToken', data.token);
+                window.location.href = '@Url.Action("Index", "Home")'; // Redirigir al home o dashboard
+            } else {
+                document.getElementById('loginError').classList.remove('d-none');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function redirectToRegister() {
+        window.location.href = '@Url.Action("Register", "Auth")';
+    }
+</script>
