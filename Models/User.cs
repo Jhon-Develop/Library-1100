@@ -11,10 +11,10 @@ namespace library_1100.Models
         public string? Name { get; set; }
         public string? Password { get; set; }
         public string? Address { get; set; }
-        public string? DocumentTypeId { get; set; }
+        public int DocumentTypeId { get; set; }
         public string? DocumentNumber { get; set; }
         public string? PhoneNumber { get; set; }
-        public string? RoleId { get; set; }
+        public int RoleId { get; set; }
 
         public DocumentType? DocumentType { get; set; }
         public Role? Role { get; set; }

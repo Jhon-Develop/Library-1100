@@ -23,6 +23,13 @@ namespace library_1100.Controllers
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            // Configuración explícita de las tablas
+            modelBuilder.Entity<User>().ToTable("users");
+            modelBuilder.Entity<DocumentType>().ToTable("documentTypes");
+            modelBuilder.Entity<Role>().ToTable("roles");
+            modelBuilder.Entity<Loan>().ToTable("loans");
+            modelBuilder.Entity<Book>().ToTable("books");
+            modelBuilder.Entity<Category>().ToTable("categories");
 
             // Configuración de la relación entre User y DocumentType
             modelBuilder.Entity<User>()

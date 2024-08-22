@@ -8,8 +8,8 @@ namespace library_1100.Models
     public class Loan
     {
         public int Id { get; set; }
-        public string? UserId { get; set; }
-        public string? BookId { get; set; }
+        public int UserId { get; set; }
+        public int BookId { get; set; }
         public DateTime LoanSatartDate { get; set; }
         public DateTime LoanEndDate { get; set; }
 

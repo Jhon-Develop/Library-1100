@@ -11,7 +11,7 @@ namespace library_1100.Models
         public string? Title { get; set; }
         public string? Author { get; set; }
         public string? Isbn { get; set; }
-        public string? CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public bool? Avalibility { get; set; }
 
         public Category? Category { get; set; }
