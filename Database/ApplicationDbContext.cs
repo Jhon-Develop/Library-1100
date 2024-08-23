@@ -62,6 +62,7 @@ namespace library_1100.Controllers
             {
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Title).HasColumnName("title");
+                entity.Property(e => e.Image).HasColumnName("img");
                 entity.Property(e => e.Author).HasColumnName("author");
                 entity.Property(e => e.Isbn).HasColumnName("isbn");
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");

@@ -18,9 +18,12 @@ namespace library_1100.Views.BooksView
         {
             _context = context;
         }
-        public IActionResult BookList()
+        
+        [HttpGet("BooksView/BooksList")]
+        public async Task<IActionResult> BookList()
         {
-            return View();
+             var applicationDbContext = _context.Books.Include(b => b.Category);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: BooksView
@@ -61,7 +64,7 @@ namespace library_1100.Views.BooksView
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Author,Isbn,CategoryId,Avalibility")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,Title,Image,Author,Isbn,CategoryId,Avalibility")] Book book)
         {
             if (!ModelState.IsValid)
             {
@@ -115,7 +118,7 @@ namespace library_1100.Views.BooksView
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,Isbn,CategoryId,Avalibility")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Image,Author,Isbn,CategoryId,Avalibility")] Book book)
         {
             if (id != book.Id)
             {
