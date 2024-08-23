@@ -7,7 +7,9 @@
 <h1>Lista</h1>
 
 <p>
-  <a asp-action="Create">Create New</a>
+  <a class="btn btn-success"asp-action="Create">Create New Book</a>
+    <a class="btn btn-warning"asp-action="Index">Go to Index</a>
+
 </p>
 
 
@@ -88,19 +90,19 @@ alt="Card image cap" style="height: 15rem;">
           {
             var item = modelList[j]; // Obtener la película actual
 
-            <article class="card" style="width: 15rem;">
+            <article class="card" style="width: 17rem;">
               <img class="card-img-top"
                 src="@Html.DisplayFor(modelItem => item.Image)"
-                alt="Card image cap" style="height: 15rem;">
+                alt="Card image cap" style="height: 14rem;">
               <div class="card-body">
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">@Html.DisplayFor(modelItem => item.Title)</li>
-                <li class="list-group-item">@Html.DisplayFor(modelItem => item.Author)</li>
-                <li class="list-group-item">@Html.DisplayFor(modelItem => item.Avalibility)</li>
-                <li class="list-group-item">@Html.DisplayFor(modelItem => item.Category.Name)</li>
+                <li class="list-group-item">By @Html.DisplayFor(modelItem => item.Author)</li>
+                <li class="list-group-item">Is avaliable? <br>@Html.DisplayFor(modelItem => item.Avalibility)</li>
+                <li class="list-group-item">Genre: @Html.DisplayFor(modelItem => item.Category.Name)</li>
               </ul>
-              <div class="card-body d-flex flex-column align-items-center gap-1">
+              <div class="card-body d-flex flex-column align-items-center gap-1 container px-4">
                 <a asp-action="Edit" class="btn btn-primary" style="width: 100%;" asp-route-id="@item.Id">Edit</a>
                 <a asp-action="Details" class="btn btn-success" style="width: 100%;"  asp-route-id="@item.Id">Details</a>
                 <a asp-action="Delete" class="btn btn-danger" style="width: 100%;" asp-route-id="@item.Id">Delete</a>
