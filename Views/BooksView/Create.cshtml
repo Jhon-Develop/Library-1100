@@ -29,11 +29,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId">
+                    <option selected disabled>Select a category</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Avalibility" class="control-label"></label>
-                <input asp-for="Avalibility" class="form-control" />
+                <select asp-for="Avalibility" class="form-control">
+                    <option selected disabled>Is Avaliable?</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
                 <span asp-validation-for="Avalibility" class="text-danger"></span>
             </div>
             <div class="form-group">

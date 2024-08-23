@@ -15,6 +15,6 @@ namespace library_1100.Models
         public bool? Avalibility { get; set; }
 
         public Category? Category { get; set; }
-        public required ICollection<Loan> Loans { get; set; }
+        public ICollection<Loan> Loans { get; set; } = new List<Loan>();
     }
 }

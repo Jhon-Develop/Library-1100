@@ -10,7 +10,7 @@ namespace library_1100.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public int BookId { get; set; }
-        public DateTime LoanSatartDate { get; set; }
+        public DateTime LoanStartDate { get; set; }
         public DateTime LoanEndDate { get; set; }
 
         public User? User { get; set; }

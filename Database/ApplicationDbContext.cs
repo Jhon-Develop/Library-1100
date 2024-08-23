@@ -20,9 +20,11 @@ namespace library_1100.Controllers
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             // Configuración explícita de las tablas
             modelBuilder.Entity<User>().ToTable("users");
             modelBuilder.Entity<DocumentType>().ToTable("documentTypes");
@@ -31,40 +33,56 @@ namespace library_1100.Controllers
             modelBuilder.Entity<Book>().ToTable("books");
             modelBuilder.Entity<Category>().ToTable("categories");
 
-            // Configuración de la relación entre User y DocumentType
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.DocumentType)
-                .WithMany(dt => dt.Users)
-                .HasForeignKey(u => u.DocumentTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
+            // Ejemplo de mapeo explícito de columnas
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Name).HasColumnName("name");
+                entity.Property(e => e.Password).HasColumnName("password");
+                entity.Property(e => e.Address).HasColumnName("address");
+                entity.Property(e => e.DocumentTypeId).HasColumnName("document_type_id");
+                entity.Property(e => e.DocumentNumber).HasColumnName("document_number");
+                entity.Property(e => e.PhoneNumber).HasColumnName("phone_number");
+                entity.Property(e => e.RoleId).HasColumnName("role_id");
+            });
 
-            // Configuración de la relación entre User y Role
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Role)
-                .WithMany(r => r.Users)
-                .HasForeignKey(u => u.RoleId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<DocumentType>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Name).HasColumnName("name");
+            });
 
-            // Configuración de la relación entre Book y Category
-            modelBuilder.Entity<Book>()
-                .HasOne(b => b.Category)
-                .WithMany(c => c.Books)
-                .HasForeignKey(b => b.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Name).HasColumnName("name");
+            });
 
-            // Configuración de la relación entre Loan y User
-            modelBuilder.Entity<Loan>()
-                .HasOne(l => l.User)
-                .WithMany(u => u.Loans)
-                .HasForeignKey(l => l.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Book>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Title).HasColumnName("title");
+                entity.Property(e => e.Author).HasColumnName("author");
+                entity.Property(e => e.Isbn).HasColumnName("isbn");
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
+                entity.Property(e => e.Avalibility).HasColumnName("avalibility");
+            });
 
-            // Configuración de la relación entre Loan y Book
-            modelBuilder.Entity<Loan>()
-                .HasOne(l => l.Book)
-                .WithMany(b => b.Loans)
-                .HasForeignKey(l => l.BookId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Name).HasColumnName("category");
+            });
+
+            modelBuilder.Entity<Loan>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.BookId).HasColumnName("book_id");
+                entity.Property(e => e.LoanStartDate).HasColumnName("loan_start_date");
+                entity.Property(e => e.LoanEndDate).HasColumnName("loan_end_date");
+            });
         }
+
     }
 }
